@@ -17,6 +17,7 @@ class Instagram:
         print("Welcome to Instagram Downloader")
         print("Please before you start, enter your account from firefox and then run cookie.py file")
         print("Then you can start downloading")
+        #list session files in the current directory
         self.username = input("Enter your username which you login: ")
         
         try:
@@ -63,6 +64,15 @@ class Instagram:
         try:
             self.L.download_profile(target_username, profile_pic_only=True)
             print("Profile picture downloaded successfully")
+            
+            if os.name != "nt":
+                for file in os.listdir(target_username):
+                    if file.endswith(".jpg"):
+                        os.rename(target_username + "/" + file, target_username + ".jpg")
+                        #open the image
+                        os.system("open " + target_username + ".jpg")
+                        
+            
         except Exception as e:
             print("Error: ", e)
         self.menu()
